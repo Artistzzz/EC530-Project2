@@ -1,0 +1,52 @@
+
+CREATE TABLE users (
+    user_id SERIAL PRIMARY KEY,
+    username VARCHAR NOT NULL,
+    password_hash CHAR(60) NOT NULL,
+    role VARCHAR NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE components (
+    component_id SERIAL PRIMARY KEY,
+    type VARCHAR NOT NULL,
+    model VARCHAR NOT NULL,
+    specifications TEXT, -- Can store JSON for flexible specifications
+    manufacturer VARCHAR NOT NULL,
+    user_id INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE journeys (
+    journey_id SERIAL PRIMARY KEY,
+    start_point VARCHAR NOT NULL,
+    end_point VARCHAR NOT NULL,
+    status VARCHAR NOT NULL,
+    current_speed FLOAT DEFAULT 0,
+    expected_duration INTEGER, -- Expected duration in minutes
+    actual_duration INTEGER, -- Actual duration in minutes
+    user_id INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE journey_components (
+    journey_id INTEGER NOT NULL,
+    component_id INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (journey_id, component_id),
+    FOREIGN KEY (journey_id) REFERENCES journeys(journey_id),
+    FOREIGN KEY (component_id) REFERENCES components(component_id)
+);
+
+CREATE TABLE event_logs (
+    event_id SERIAL PRIMARY KEY,
+    journey_id INTEGER NOT NULL,
+    user_id INTEGER, -- Optional: link events to users if applicable
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    event_type VARCHAR NOT NULL,
+    description TEXT NOT NULL,
+    FOREIGN KEY (journey_id) REFERENCES journeys(journey_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);

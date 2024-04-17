@@ -1,0 +1,50 @@
+Table users {
+  user_id integer [primary key]
+  username varchar
+  password_hash char(60)
+  role varchar
+  created_at timestamp [default: `CURRENT_TIMESTAMP`]
+}
+
+Table components {
+  component_id integer [primary key]
+  type varchar
+  model varchar
+  specifications text [note: 'Can store JSON for flexible specifications']
+  manufacturer varchar
+  user_id integer  // Foreign key reference to users
+  created_at timestamp [default: `CURRENT_TIMESTAMP`]
+}
+
+Table journeys {
+  journey_id integer [primary key]
+  start_point varchar
+  end_point varchar
+  status varchar
+  current_speed float [default: 0]
+  expected_duration integer [note: 'Expected duration in minutes']
+  actual_duration integer [note: 'Actual duration in minutes']
+  user_id integer  // Foreign key reference to users
+  created_at timestamp [default: `CURRENT_TIMESTAMP`]
+}
+
+Table journey_components {
+  journey_id integer [ref: > journeys.journey_id] // Foreign key reference to journeys
+  component_id integer [ref: > components.component_id] // Foreign key reference to components
+  created_at timestamp [default: `CURRENT_TIMESTAMP`]
+  primary key (journey_id, component_id)
+}
+
+Table event_logs {
+  event_id integer [primary key]
+  journey_id integer [ref: > journeys.journey_id] // Foreign key reference to journeys
+  user_id integer  // optional: link events to users if applicable
+  timestamp timestamp [default: `CURRENT_TIMESTAMP`]
+  event_type varchar
+  description text
+}
+
+// Relationships
+Ref: components.user_id > users.user_id // many-to-one
+Ref: journeys.user_id > users.user_id // many-to-one
+Ref: event_logs.user_id > users.user_id // many-to-one (if applicable)
