@@ -1,0 +1,12 @@
+.App {
+  text-align: center;
+  margin-top: 20px;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #e3f2fd;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
