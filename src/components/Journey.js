@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import axios from 'axios'; // Assuming axios is installed, import it directly if not using an axios instance setup
+import axios from 'axios';
 
 function Journey() {
   const [startPoint, setStartPoint] = useState('');
   const [endPoint, setEndPoint] = useState('');
 
   const handleSubmit = () => {
-    axios.post('http://localhost:3000/api/journeys', { startPoint, endPoint }) // Make sure URL matches your backend's full URL
-      .then(response => alert('Journey started! ID: ' + response.data.id)) // Accessing the ID of the new journey
+    axios.post('http://localhost:3000/api/journeys', { startPoint, endPoint })
+      .then(response => {
+        alert(`Journey started! ID: ${response.data.id}`);
+      })
       .catch(error => {
         const message = error.response ? error.response.data : error.message;
         alert('Failed to start journey: ' + message);
