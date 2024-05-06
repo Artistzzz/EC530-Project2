@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "npm-run-all": "^4.1.5"
+  },
+
+  "scripts": {
+    "start:back-end": "cd back-end && npm start",
+    "start:self-driving-robot-ui": "cd self-driving-robot-ui && npm start",
+    "start:both": "npm-run-all --parallel start:back-end start:self-driving-robot-ui"
+  }
+
+}
