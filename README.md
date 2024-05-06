@@ -22,4 +22,13 @@ The primary purpose of this project is to develop a comprehensive system for a s
     - Collision Avoidance Module: Provides buttons to initiate an obstacle scan and set avoidance strategies, with real-time feedback on the operations performed.
 <br>
 
+## Future implementation
+ - Fixing integration errors, to ensure connections between all backend functions and the frontend.
+ - Complete implementation of all remaining modules within this project.
+
+## Instructions For Developers
+ - Each folder within the project is dedicated to a specific aspect, as indicated by its name. The "src" folder contains essential files for the front-end, while "server.js" serves as the back-end, implementing the REST API for the Collision Section Module and Navigation Module, referred to as "Journey". The "package.json" resides in the root folder and facilitates concurrent execution of the front-end and back-end. Additional files necessary for the project, originating from React and Node.js, are not included and must be obtained via the "npm install" command. It is imperative to install React and Node.js beforehand. To maintain file structure consistency, developers are advised to refer to the "projectStructure.png" located within the demo folder. Thank you for your attention.
+
+
+
 
